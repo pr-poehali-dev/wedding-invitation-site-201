@@ -54,32 +54,6 @@ const GIFTS = [
   { icon: '📚', title: 'Библиотека', desc: 'Книги для нашей домашней библиотеки' },
 ];
 
-const HOTELS = [
-  {
-    name: 'Grand Palace Hotel',
-    stars: 5,
-    dist: '2 мин',
-    price: 'от 8 500 ₽/ночь',
-    desc: 'Роскошный отель с видом на реку, спа и ресторан',
-    icon: '🏨',
-  },
-  {
-    name: 'Boutique Inn «Берёзка»',
-    stars: 4,
-    dist: '5 мин',
-    price: 'от 4 200 ₽/ночь',
-    desc: 'Уютный бутик-отель в тихом месте, завтрак включён',
-    icon: '🌿',
-  },
-  {
-    name: 'City Apart Hotel',
-    stars: 3,
-    dist: '10 мин',
-    price: 'от 2 800 ₽/ночь',
-    desc: 'Современные апартаменты с кухней и парковкой',
-    icon: '🏢',
-  },
-];
 
 const DRESSCODE = [
   { color: '#1a4a35', name: 'Изумрудный', hex: '#1a4a35', light: false },
@@ -114,7 +88,6 @@ export default function Index() {
     { href: '#venue', label: 'Место' },
     { href: '#rsvp', label: 'Подтвердить' },
     { href: '#gifts', label: 'Подарки' },
-    { href: '#hotels', label: 'Отели' },
     { href: '#dresscode', label: 'Дресс-код' },
   ];
 
@@ -446,43 +419,6 @@ export default function Index() {
             <a href="#" className="btn-outline-gold">
               Открыть реестр подарков
             </a>
-          </div>
-        </div>
-      </section>
-
-      {/* HOTELS */}
-      <section id="hotels" className="py-24 px-6 emerald-bg">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-16">
-            <p className="reveal text-xs tracking-[0.4em] uppercase mb-4" style={{ color: '#c9a84c' }}>Размещение</p>
-            <h2 className="reveal reveal-delay-1 text-5xl font-light mb-4" style={{ fontFamily: 'Cormorant Garamond, serif', color: '#f5f0e8' }}>
-              Где остановиться
-            </h2>
-            <div className="reveal reveal-delay-2 section-divider mb-6" />
-            <p className="reveal reveal-delay-2 text-sm" style={{ color: 'rgba(245,240,232,0.6)' }}>Рекомендуем забронировать заранее — июль пользуется спросом</p>
-          </div>
-
-          <div className="space-y-5">
-            {HOTELS.map((h, i) => (
-              <div key={i} className={`reveal reveal-delay-${i + 1} hotel-card glass-card rounded-2xl p-7 flex flex-col md:flex-row md:items-center gap-5`}>
-                <div className="text-4xl shrink-0">{h.icon}</div>
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-1">
-                    <h3 className="font-serif text-xl" style={{ color: '#0f2a1f', fontFamily: 'Cormorant Garamond, serif' }}>{h.name}</h3>
-                    <span className="text-xs" style={{ color: '#c9a84c' }}>{'★'.repeat(h.stars)}</span>
-                  </div>
-                  <p className="text-xs mb-2" style={{ color: '#3a5a48' }}>{h.desc}</p>
-                  <span className="text-xs tracking-widest" style={{ color: '#3a5a48' }}>
-                    <Icon name="MapPin" size={11} style={{ display: 'inline', marginRight: 4, color: '#c9a84c' }} />
-                    {h.dist} от ресторана
-                  </span>
-                </div>
-                <div className="text-right shrink-0">
-                  <div className="font-serif text-lg mb-2" style={{ color: '#0f2a1f', fontFamily: 'Cormorant Garamond, serif' }}>{h.price}</div>
-                  <button className="btn-gold" style={{ padding: '10px 24px', fontSize: '0.72rem' }}>Забронировать</button>
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       </section>
