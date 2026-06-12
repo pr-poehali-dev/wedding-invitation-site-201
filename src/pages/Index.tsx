@@ -103,7 +103,7 @@ const PLAYLIST = [
 export default function Index() {
   useReveal();
   const countdown = useCountdown(WEDDING_DATE);
-  const [rsvp, setRsvp] = useState({ name: '', email: '', phone: '', guests: '1', coming: 'yes', wish: '' });
+  const [rsvp, setRsvp] = useState({ name: '', email: '', phone: '', guests: '1', coming: 'yes', wish: '', alcohol: [] as string[], allergy: '' });
   const [rsvpSent, setRsvpSent] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [playlistSong, setPlaylistSong] = useState({ artist: '', song: '' });
@@ -362,6 +362,42 @@ export default function Index() {
                     <option value="no">К сожалению, нет</option>
                     <option value="maybe">Пока не знаю</option>
                   </select>
+                </div>
+                <div className="col-span-2">
+                  <label className="block text-xs tracking-widest uppercase mb-3" style={{ color: '#3a5a48' }}>Алкоголь</label>
+                  <div className="grid grid-cols-2 gap-2">
+                    {[
+                      { val: 'wine', label: '🍷 Вино' },
+                      { val: 'champagne', label: '🥂 Шампанское' },
+                      { val: 'whiskey', label: '🥃 Виски / Коньяк' },
+                      { val: 'beer', label: '🍺 Пиво' },
+                      { val: 'cocktails', label: '🍹 Коктейли' },
+                      { val: 'none', label: '🚫 Не пью' },
+                    ].map(opt => {
+                      const checked = rsvp.alcohol.includes(opt.val);
+                      return (
+                        <button
+                          key={opt.val}
+                          type="button"
+                          onClick={() => setRsvp({ ...rsvp, alcohol: checked ? rsvp.alcohol.filter(a => a !== opt.val) : [...rsvp.alcohol, opt.val] })}
+                          className="text-left text-sm px-4 py-3 rounded-xl transition-all"
+                          style={{
+                            border: checked ? '1.5px solid #c9a84c' : '1px solid rgba(201,168,76,0.25)',
+                            background: checked ? 'rgba(201,168,76,0.1)' : 'rgba(255,255,255,0.7)',
+                            color: '#0f2a1f',
+                            fontFamily: 'Golos Text, sans-serif',
+                          }}
+                        >
+                          {opt.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+                <div className="col-span-2">
+                  <label className="block text-xs tracking-widest uppercase mb-2" style={{ color: '#3a5a48' }}>Аллергии и особые пожелания к меню</label>
+                  <input className="form-input" type="text" placeholder="Например: орехи, лактоза, вегетарианское меню..."
+                    value={rsvp.allergy} onChange={e => setRsvp({ ...rsvp, allergy: e.target.value })} />
                 </div>
                 <div className="col-span-2">
                   <label className="block text-xs tracking-widest uppercase mb-2" style={{ color: '#3a5a48' }}>Пожелания молодожёнам</label>
