@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Icon from '@/components/ui/icon';
 
-const WEDDING_DATE = new Date('2026-07-12T15:00:00');
+const WEDDING_DATE = new Date('2026-08-11T15:00:00');
 
 const HERO_IMAGE = 'https://cdn.poehali.dev/projects/9afabb3c-1523-4299-a0f9-bd1fd5cf3035/files/ffa2ce43-f2f9-4c7c-86c5-26fbd507c73e.jpg';
 
@@ -105,7 +105,7 @@ export default function Index() {
       <nav className="fixed top-0 left-0 right-0 z-50" style={{ background: 'rgba(15,42,31,0.96)', backdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(201,168,76,0.2)' }}>
         <div className="max-w-6xl mx-auto px-6 flex items-center justify-between h-16">
           <a href="#hero" className="font-serif text-lg tracking-widest" style={{ color: '#c9a84c', fontFamily: 'Cormorant Garamond, serif' }}>
-            А&nbsp;&amp;&nbsp;М
+            Д&nbsp;&amp;&nbsp;А
           </a>
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map(l => (
@@ -141,11 +141,11 @@ export default function Index() {
             Мы женимся
           </p>
           <h1 className="animate-fade-up animate-delay-2 font-serif text-6xl md:text-8xl font-light mb-4" style={{ color: '#f5f0e8', fontFamily: 'Cormorant Garamond, serif', lineHeight: 1.1 }}>
-            Анна<br /><span style={{ color: '#c9a84c' }}>&amp;</span><br />Михаил
+            Дарья<br /><span style={{ color: '#c9a84c' }}>&amp;</span><br />Андрей
           </h1>
           <div className="animate-fade-up animate-delay-3 section-divider my-8" />
           <p className="animate-fade-up animate-delay-4 text-lg tracking-[0.25em] uppercase mb-2" style={{ color: 'rgba(245,240,232,0.9)', fontFamily: 'Golos Text, sans-serif', fontWeight: 300 }}>
-            12 июля 2026
+            11 августа 2026
           </p>
           <p className="animate-fade-up animate-delay-5 text-sm tracking-widest" style={{ color: 'rgba(245,240,232,0.6)' }}>
             Москва, Ресторан «Белый Сад»
@@ -193,7 +193,7 @@ export default function Index() {
 
           <div className="grid md:grid-cols-3 gap-6">
             {[
-              { icon: 'Calendar', title: '12 июля 2026', sub: 'Воскресенье', label: 'Дата' },
+              { icon: 'Calendar', title: '11 августа 2026', sub: 'Вторник', label: 'Дата' },
               { icon: 'Clock', title: '15:00', sub: 'Сбор гостей с 14:30', label: 'Время' },
               { icon: 'MapPin', title: 'Белый Сад', sub: 'ул. Садовая, 12, Москва', label: 'Место' },
             ].map((item, i) => (
@@ -561,8 +561,8 @@ export default function Index() {
 
           <div className="grid md:grid-cols-2 gap-6">
             {[
-              { name: 'Анна', role: 'Невеста', phone: '+7 (999) 111-22-33', tg: '@anna_wedding', icon: '👰' },
-              { name: 'Михаил', role: 'Жених', phone: '+7 (999) 123-45-67', tg: '@misha_wedding', icon: '🤵' },
+              { name: 'Дарья', role: 'Невеста', phone: '+7 (999) 111-22-33', tg: '@darya_wedding', icon: '👰' },
+              { name: 'Андрей', role: 'Жених', phone: '+7 (999) 123-45-67', tg: '@andrey_wedding', icon: '🤵' },
             ].map((p, i) => (
               <div key={i} className={`reveal reveal-delay-${i + 1} glass-card rounded-2xl p-8`}>
                 <div className="text-4xl mb-4">{p.icon}</div>
@@ -585,9 +585,9 @@ export default function Index() {
       {/* FOOTER */}
       <footer className="py-12 px-6 text-center" style={{ background: '#0f2a1f', borderTop: '1px solid rgba(201,168,76,0.15)' }}>
         <div className="font-serif text-3xl mb-3 gold-text" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
-          Анна &amp; Михаил
+          Дарья &amp; Андрей
         </div>
-        <p className="text-xs tracking-widest mb-6" style={{ color: 'rgba(245,240,232,0.35)' }}>12 июля 2026 • Москва</p>
+        <p className="text-xs tracking-widest mb-6" style={{ color: 'rgba(245,240,232,0.35)' }}>11 августа 2026 • Москва</p>
         <p className="text-xs" style={{ color: 'rgba(245,240,232,0.25)' }}>Сделано с любовью ♥</p>
       </footer>
 
