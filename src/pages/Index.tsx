@@ -81,6 +81,17 @@ const HOTELS = [
   },
 ];
 
+const DRESSCODE = [
+  { color: '#1a4a35', name: 'Изумрудный', hex: '#1a4a35', light: false },
+  { color: '#c9a84c', name: 'Золотой', hex: '#c9a84c', light: false },
+  { color: '#f5f0e8', name: 'Айвори', hex: '#f5f0e8', light: true },
+  { color: '#8b7355', name: 'Мокко', hex: '#8b7355', light: false },
+  { color: '#d4c5b0', name: 'Шампань', hex: '#d4c5b0', light: true },
+  { color: '#2c3e2d', name: 'Тёмный лес', hex: '#2c3e2d', light: false },
+];
+
+const DRESSCODE_AVOID = ['#ffffff', '#ff0000', '#000000'];
+
 const PLAYLIST = [
   { artist: 'Ed Sheeran', song: 'Perfect', mood: 'Романтика' },
   { artist: 'John Legend', song: 'All of Me', mood: 'Первый танец' },
@@ -104,6 +115,7 @@ export default function Index() {
     { href: '#rsvp', label: 'Подтвердить' },
     { href: '#gifts', label: 'Подарки' },
     { href: '#hotels', label: 'Отели' },
+    { href: '#dresscode', label: 'Дресс-код' },
   ];
 
   const pad = (n: number) => String(n).padStart(2, '0');
@@ -435,6 +447,93 @@ export default function Index() {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* DRESSCODE */}
+      <section id="dresscode" className="py-24 px-6">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-16">
+            <p className="reveal text-xs tracking-[0.4em] uppercase mb-4" style={{ color: '#c9a84c' }}>Стиль</p>
+            <h2 className="reveal reveal-delay-1 text-5xl font-light mb-4" style={{ fontFamily: 'Cormorant Garamond, serif', color: '#0f2a1f' }}>
+              Дресс-код
+            </h2>
+            <div className="reveal reveal-delay-2 section-divider mb-6" />
+            <p className="reveal reveal-delay-2 text-sm max-w-md mx-auto" style={{ color: '#3a5a48' }}>
+              Мы будем рады, если вы поддержите цветовую палитру нашей свадьбы
+            </p>
+          </div>
+
+          {/* Формат */}
+          <div className="reveal glass-card gold-border rounded-2xl p-8 mb-10 text-center">
+            <div className="inline-flex items-center gap-3 mb-4">
+              <Icon name="Sparkles" fallback="Star" size={18} style={{ color: '#c9a84c' }} />
+              <span className="text-xs tracking-[0.3em] uppercase" style={{ color: '#c9a84c' }}>Формат вечера</span>
+            </div>
+            <h3 className="font-serif text-3xl mb-3" style={{ fontFamily: 'Cormorant Garamond, serif', color: '#0f2a1f' }}>Black Tie Optional</h3>
+            <p className="text-sm leading-relaxed max-w-sm mx-auto" style={{ color: '#3a5a48' }}>
+              Вечерние платья и костюмы приветствуются. Коктейльные наряды также уместны.
+              Главное — ощущение праздника и элегантности.
+            </p>
+          </div>
+
+          {/* Палитра */}
+          <div className="reveal mb-10">
+            <p className="text-center text-xs tracking-widest uppercase mb-6" style={{ color: '#3a5a48' }}>Рекомендуемая палитра</p>
+            <div className="grid grid-cols-3 md:grid-cols-6 gap-4">
+              {DRESSCODE.map((dc, i) => (
+                <div key={i} className={`reveal reveal-delay-${i % 3 + 1} text-center`}>
+                  <div
+                    className="w-16 h-16 rounded-full mx-auto mb-3 shadow-lg"
+                    style={{
+                      background: dc.hex,
+                      border: dc.light ? '2px solid rgba(201,168,76,0.4)' : 'none',
+                      boxShadow: '0 4px 16px rgba(0,0,0,0.12)'
+                    }}
+                  />
+                  <p className="text-xs" style={{ color: '#3a5a48' }}>{dc.name}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Гостям */}
+          <div className="grid md:grid-cols-2 gap-5">
+            <div className="reveal reveal-delay-1 glass-card gold-border rounded-2xl p-7">
+              <div className="flex items-center gap-3 mb-4">
+                <span className="text-2xl">👗</span>
+                <h3 className="font-serif text-xl" style={{ fontFamily: 'Cormorant Garamond, serif', color: '#0f2a1f' }}>Для гостий</h3>
+              </div>
+              <ul className="space-y-2">
+                {['Вечерние и коктейльные платья', 'Длина: миди или в пол', 'Элегантные брючные костюмы', 'Каблук или элегантные балетки'].map((t, i) => (
+                  <li key={i} className="flex items-center gap-2 text-sm" style={{ color: '#3a5a48' }}>
+                    <span style={{ color: '#c9a84c', fontSize: '0.5rem' }}>◆</span>{t}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="reveal reveal-delay-2 glass-card gold-border rounded-2xl p-7">
+              <div className="flex items-center gap-3 mb-4">
+                <span className="text-2xl">🤵</span>
+                <h3 className="font-serif text-xl" style={{ fontFamily: 'Cormorant Garamond, serif', color: '#0f2a1f' }}>Для гостей</h3>
+              </div>
+              <ul className="space-y-2">
+                {['Смокинг или строгий костюм', 'Галстук или бабочка', 'Светлая или пастельная рубашка', 'Классические туфли'].map((t, i) => (
+                  <li key={i} className="flex items-center gap-2 text-sm" style={{ color: '#3a5a48' }}>
+                    <span style={{ color: '#c9a84c', fontSize: '0.5rem' }}>◆</span>{t}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* Избегать */}
+          <div className="reveal mt-6 glass-card rounded-2xl px-7 py-5 flex flex-col md:flex-row items-center gap-4" style={{ background: 'rgba(255,240,240,0.6)', border: '1px solid rgba(200,50,50,0.15)' }}>
+            <Icon name="AlertCircle" fallback="Info" size={18} style={{ color: '#c07070', flexShrink: 0 }} />
+            <p className="text-sm" style={{ color: '#7a4040' }}>
+              <strong>Просьба избегать:</strong> белого и оттенков айвори (цвет невесты), чёрного total look и ярких кислотных оттенков.
+            </p>
           </div>
         </div>
       </section>
