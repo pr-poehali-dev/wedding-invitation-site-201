@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Icon from '@/components/ui/icon';
 
 const WEDDING_DATE = new Date('2026-08-11T15:00:00');
-const HERO_IMAGE = 'https://cdn.poehali.dev/projects/9afabb3c-1523-4299-a0f9-bd1fd5cf3035/files/014ca7d5-d1dc-4443-9a25-47cbdf685d19.jpg';
+const HERO_IMAGE = 'https://cdn.poehali.dev/projects/9afabb3c-1523-4299-a0f9-bd1fd5cf3035/files/3e120691-5c05-4ca1-9c7d-2b480368166d.jpg';
 
 function useCountdown(target: Date) {
   const calc = () => {
@@ -29,50 +29,37 @@ function useReveal() {
     const els = document.querySelectorAll('.reveal');
     const obs = new IntersectionObserver(
       (entries) => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
-      { threshold: 0.12 }
+      { threshold: 0.1 }
     );
     els.forEach(el => obs.observe(el));
     return () => obs.disconnect();
   }, []);
 }
 
-const C = {
-  olive: '#6b7c5a',
-  oliveDark: '#4a5740',
-  lavender: '#9b8fae',
-  lavenderLight: '#d4cce0',
-  blush: '#c9a0a0',
-  sage: '#8fa882',
-  cream: '#f8f5ef',
-  textDark: '#2e3328',
-  textMid: '#5a6650',
-  textSoft: '#8a9680',
-};
-
 const SCHEDULE = [
-  { time: '14:30', title: 'Сбор гостей', desc: 'Встречаем гостей, фуршет и живая музыка', icon: 'Users' },
-  { time: '15:00', title: 'Церемония', desc: 'Торжественная регистрация брака', icon: 'Heart' },
-  { time: '15:45', title: 'Фотосессия', desc: 'Прогулка по территории и фото с гостями', icon: 'Camera' },
-  { time: '17:00', title: 'Банкет', desc: 'Торжественный ужин, тосты и поздравления', icon: 'Utensils' },
-  { time: '19:30', title: 'Первый танец', desc: 'Романтический танец молодожёнов', icon: 'Music' },
-  { time: '20:00', title: 'Танцы & вечеринка', desc: 'Дискотека, шоу-программа и веселье до утра', icon: 'Star' },
-  { time: '00:00', title: 'Торт', desc: 'Торжественная разрезка свадебного торта', icon: 'Cake' },
+  { time: '14:30', title: 'Сбор гостей', desc: 'Встречаем гостей, фуршет и живая музыка' },
+  { time: '15:00', title: 'Церемония', desc: 'Торжественная регистрация брака' },
+  { time: '15:45', title: 'Фотосессия', desc: 'Прогулка по территории и фото с гостями' },
+  { time: '17:00', title: 'Банкет', desc: 'Торжественный ужин, тосты и поздравления' },
+  { time: '19:30', title: 'Первый танец', desc: 'Романтический танец молодожёнов' },
+  { time: '20:00', title: 'Вечеринка', desc: 'Дискотека, шоу-программа и веселье' },
+  { time: '00:00', title: 'Торт', desc: 'Торжественная разрезка свадебного торта' },
 ];
 
 const GIFTS = [
-  { icon: '✈️', title: 'Медовый месяц', desc: 'Помогите нам создать незабываемое свадебное путешествие', popular: true },
-  { icon: '🏡', title: 'Гнёздышко', desc: 'Вклад в обустройство нашего общего дома' },
-  { icon: '🍷', title: 'Вечер вдвоём', desc: 'Подарите нам незабываемый романтический ужин' },
+  { icon: '✈️', title: 'Медовый месяц', desc: 'Незабываемое свадебное путешествие', popular: true },
+  { icon: '🏡', title: 'Гнёздышко', desc: 'Вклад в обустройство нашего дома' },
+  { icon: '🍷', title: 'Вечер вдвоём', desc: 'Романтический ужин для двоих' },
   { icon: '📚', title: 'Библиотека', desc: 'Книги для нашей домашней библиотеки' },
 ];
 
-const DRESSCODE = [
-  { name: 'Лаванда', hex: '#9b8fae', light: true },
-  { name: 'Шалфей', hex: '#8fa882', light: false },
-  { name: 'Айвори', hex: '#f5f0e8', light: true },
-  { name: 'Пудра', hex: '#d4a5a0', light: true },
-  { name: 'Оливковый', hex: '#6b7c5a', light: false },
-  { name: 'Шампань', hex: '#c4aa87', light: true },
+const DRESSCODE_COLORS = [
+  { name: 'Лаванда', hex: '#c8c0d8' },
+  { name: 'Шалфей', hex: '#a8b8a0' },
+  { name: 'Айвори', hex: '#f0ece4', border: true },
+  { name: 'Пудра', hex: '#e0c0bc' },
+  { name: 'Оливковый', hex: '#8a9878' },
+  { name: 'Шампань', hex: '#d4c090' },
 ];
 
 const PLAYLIST = [
@@ -83,138 +70,126 @@ const PLAYLIST = [
   { artist: 'ABBA', song: 'Dancing Queen', mood: 'Танцы' },
 ];
 
+const NAV = [
+  { href: '#event', label: 'О дне' },
+  { href: '#schedule', label: 'Программа' },
+  { href: '#venue', label: 'Место' },
+  { href: '#rsvp', label: 'RSVP' },
+  { href: '#gifts', label: 'Подарки' },
+  { href: '#dresscode', label: 'Дресс-код' },
+];
+
 export default function Index() {
   useReveal();
-  const countdown = useCountdown(WEDDING_DATE);
+  const cd = useCountdown(WEDDING_DATE);
   const [rsvp, setRsvp] = useState({ name: '', email: '', phone: '', guests: '1', coming: 'yes', wish: '', alcohol: [] as string[], allergy: '' });
   const [rsvpSent, setRsvpSent] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [playlistSong, setPlaylistSong] = useState('');
-
-  const navLinks = [
-    { href: '#event', label: 'О событии' },
-    { href: '#schedule', label: 'Программа' },
-    { href: '#venue', label: 'Место' },
-    { href: '#rsvp', label: 'Подтвердить' },
-    { href: '#gifts', label: 'Подарки' },
-    { href: '#dresscode', label: 'Дресс-код' },
-  ];
-
+  const [song, setSong] = useState('');
   const pad = (n: number) => String(n).padStart(2, '0');
   const handleRsvp = (e: React.FormEvent) => { e.preventDefault(); setRsvpSent(true); };
+  const toggleAlcohol = (val: string) =>
+    setRsvp(r => ({ ...r, alcohol: r.alcohol.includes(val) ? r.alcohol.filter(a => a !== val) : [...r.alcohol, val] }));
 
   return (
-    <div className="min-h-screen" style={{ background: C.cream }}>
+    <div className="min-h-screen bg-white" style={{ color: '#141414' }}>
 
       {/* NAV */}
-      <nav className="fixed top-0 left-0 right-0 z-50" style={{ background: 'rgba(248,245,239,0.94)', backdropFilter: 'blur(14px)', borderBottom: '1px solid rgba(155,143,174,0.2)' }}>
-        <div className="max-w-6xl mx-auto px-6 flex items-center justify-between h-16">
-          <a href="#hero" style={{ fontFamily: 'Playfair Display, serif', color: C.olive, fontSize: '1.2rem', fontStyle: 'italic' }}>
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-white" style={{ borderBottom: '1px solid #f0f0f0' }}>
+        <div className="max-w-5xl mx-auto px-8 flex items-center justify-between h-14">
+          <a href="#hero" style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1.1rem', fontStyle: 'italic', color: '#141414' }}>
             Д &amp; А
           </a>
-          <div className="hidden md:flex items-center gap-8">
-            {navLinks.map(l => (
-              <a key={l.href} href={l.href} className="nav-link text-xs tracking-widest uppercase" style={{ color: C.textMid }}>
-                {l.label}
-              </a>
+          <div className="hidden md:flex items-center gap-10">
+            {NAV.map(l => (
+              <a key={l.href} href={l.href} className="nav-link text-xs" style={{ color: '#555' }}>{l.label}</a>
             ))}
           </div>
-          <button className="md:hidden" style={{ color: C.olive }} onClick={() => setMenuOpen(!menuOpen)}>
-            <Icon name={menuOpen ? 'X' : 'Menu'} size={22} />
+          <button className="md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
+            <Icon name={menuOpen ? 'X' : 'Menu'} size={20} style={{ color: '#141414' }} />
           </button>
         </div>
         {menuOpen && (
-          <div className="md:hidden px-6 py-4 flex flex-col gap-4" style={{ background: 'rgba(248,245,239,0.98)' }}>
-            {navLinks.map(l => (
-              <a key={l.href} href={l.href} className="text-sm tracking-widest uppercase" style={{ color: C.textMid }} onClick={() => setMenuOpen(false)}>
-                {l.label}
-              </a>
+          <div className="md:hidden px-8 py-6 flex flex-col gap-5 bg-white" style={{ borderTop: '1px solid #f0f0f0' }}>
+            {NAV.map(l => (
+              <a key={l.href} href={l.href} className="text-xs tracking-widest uppercase" style={{ color: '#555' }} onClick={() => setMenuOpen(false)}>{l.label}</a>
             ))}
           </div>
         )}
       </nav>
 
       {/* HERO */}
-      <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0">
-          <img src={HERO_IMAGE} alt="Wedding" className="w-full h-full object-cover" />
-          <div className="hero-overlay absolute inset-0" />
-        </div>
-
-        <div className="relative z-10 text-center px-6 max-w-3xl mx-auto">
-          <p className="animate-fade-up animate-delay-1 script-accent text-2xl mb-4">
-            приглашают вас на свадьбу
-          </p>
-          <h1 className="animate-fade-up animate-delay-2 font-serif mb-6" style={{ fontFamily: 'Playfair Display, serif', color: C.textDark, fontSize: 'clamp(3.5rem, 10vw, 7rem)', lineHeight: 1.05, fontStyle: 'italic' }}>
-            Дарья<br />
-            <span className="not-italic" style={{ fontFamily: 'Caveat, cursive', color: C.lavender, fontSize: '0.55em', letterSpacing: '0.2em' }}>&amp;</span>
-            <br />Андрей
-          </h1>
-          <div className="animate-fade-up animate-delay-3 section-divider my-8">
-            <span className="divider-icon">✿</span>
+      <section id="hero" className="relative" style={{ height: '100vh', minHeight: 600 }}>
+        <img src={HERO_IMAGE} alt="" className="absolute inset-0 w-full h-full object-cover" />
+        <div className="hero-overlay absolute inset-0" />
+        <div className="absolute bottom-0 left-0 right-0 px-8 pb-16 md:pb-20">
+          <div className="max-w-5xl mx-auto flex flex-col md:flex-row md:items-end md:justify-between gap-8">
+            <div>
+              <p className="animate-fade-up animate-delay-1 section-label mb-4">Свадьба</p>
+              <h1 className="animate-fade-up animate-delay-2"
+                style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 'clamp(3.5rem, 8vw, 7rem)', fontWeight: 300, fontStyle: 'italic', color: '#141414', lineHeight: 0.95 }}>
+                Дарья<br />&amp; Андрей
+              </h1>
+            </div>
+            <div className="animate-fade-up animate-delay-4 text-right">
+              <p className="text-xs tracking-[0.2em] uppercase mb-1" style={{ color: '#666' }}>11 августа 2026</p>
+              <p className="text-xs tracking-[0.1em]" style={{ color: '#888' }}>Ресторан «Белый Сад», Москва</p>
+            </div>
           </div>
-          <p className="animate-fade-up animate-delay-4 text-base tracking-[0.2em] uppercase mb-1" style={{ color: C.textMid, fontWeight: 400 }}>
-            11 августа 2026
-          </p>
-          <p className="animate-fade-up animate-delay-5 text-sm" style={{ color: C.textSoft }}>
-            Москва, Ресторан «Белый Сад»
-          </p>
+        </div>
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-float" style={{ color: '#999' }}>
+          <Icon name="ChevronDown" size={20} />
+        </div>
+      </section>
 
-          {/* Countdown */}
-          <div className="animate-fade-up animate-delay-6 flex justify-center gap-6 md:gap-10 mt-12">
+      {/* COUNTDOWN */}
+      <section className="py-20 px-8 border-b" style={{ borderColor: '#f0f0f0' }}>
+        <div className="max-w-5xl mx-auto">
+          <div className="reveal grid grid-cols-2 md:grid-cols-4 gap-0 mb-16"
+            style={{ borderTop: '1px solid #e8e8e8', borderLeft: '1px solid #e8e8e8' }}>
             {[
-              { val: countdown.days, label: 'Дней' },
-              { val: countdown.hours, label: 'Часов' },
-              { val: countdown.minutes, label: 'Минут' },
-              { val: countdown.seconds, label: 'Секунд' },
+              { val: cd.days, label: 'Дней' },
+              { val: cd.hours, label: 'Часов' },
+              { val: cd.minutes, label: 'Минут' },
+              { val: cd.seconds, label: 'Секунд' },
             ].map(({ val, label }) => (
-              <div key={label} className="text-center">
-                <div className="text-4xl md:text-5xl font-serif" style={{ fontFamily: 'Playfair Display, serif', color: C.olive, minWidth: '3rem' }}>
+              <div key={label} className="text-center py-10 px-4"
+                style={{ borderRight: '1px solid #e8e8e8', borderBottom: '1px solid #e8e8e8' }}>
+                <div style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '3.5rem', fontWeight: 300, color: '#141414', lineHeight: 1 }}>
                   {pad(val)}
                 </div>
-                <div className="text-xs tracking-widest uppercase mt-1" style={{ color: C.textSoft }}>{label}</div>
+                <p className="section-label mt-2">{label}</p>
               </div>
             ))}
           </div>
-
-          <div className="animate-fade-up animate-delay-6 mt-12">
-            <a href="#rsvp" className="btn-olive">Подтвердить присутствие</a>
+          <div className="reveal max-w-xl">
+            <p className="section-label mb-5">Приглашение</p>
+            <p style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1.6rem', fontWeight: 300, fontStyle: 'italic', lineHeight: 1.5, color: '#333' }}>
+              Мы рады пригласить вас разделить с нами один из самых счастливых дней нашей жизни.
+            </p>
+            <div className="mt-8">
+              <a href="#rsvp" className="btn-dark">Подтвердить присутствие</a>
+            </div>
           </div>
-        </div>
-
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-float" style={{ color: C.lavender }}>
-          <Icon name="ChevronDown" size={24} />
         </div>
       </section>
 
       {/* EVENT INFO */}
-      <section id="event" className="py-24 px-6" style={{ background: C.cream }}>
-        <div className="max-w-4xl mx-auto text-center">
-          <p className="reveal script-accent text-2xl mb-2">О нашем дне</p>
-          <h2 className="reveal reveal-delay-1 text-5xl md:text-6xl mb-6" style={{ fontFamily: 'Playfair Display, serif', color: C.textDark, fontWeight: 400 }}>
-            Особый день
-          </h2>
-          <div className="reveal reveal-delay-2 section-divider mb-10">
-            <span className="divider-icon">🌿</span>
-          </div>
-          <p className="reveal reveal-delay-2 text-base leading-relaxed mb-16 max-w-2xl mx-auto" style={{ color: C.textMid, fontWeight: 300 }}>
-            Мы рады пригласить вас разделить с нами один из самых счастливых дней нашей жизни.
-            Вместе мы начинаем новую главу, и нам важно, что вы будете рядом в этот торжественный момент.
-          </p>
-
-          <div className="grid md:grid-cols-3 gap-6">
+      <section id="event" className="py-20 px-8 border-b" style={{ borderColor: '#f0f0f0' }}>
+        <div className="max-w-5xl mx-auto">
+          <p className="reveal section-label mb-10">О дне</p>
+          <div className="grid md:grid-cols-3 gap-0"
+            style={{ borderTop: '1px solid #e8e8e8', borderLeft: '1px solid #e8e8e8' }}>
             {[
-              { icon: 'Calendar', title: '11 августа 2026', sub: 'Вторник', label: 'Дата' },
-              { icon: 'Clock', title: '15:00', sub: 'Сбор гостей с 14:30', label: 'Время' },
-              { icon: 'MapPin', title: 'Белый Сад', sub: 'ул. Садовая, 12, Москва', label: 'Место' },
+              { label: 'Дата', value: '11 августа 2026', sub: 'Вторник' },
+              { label: 'Время', value: '15:00', sub: 'Сбор гостей с 14:30' },
+              { label: 'Место', value: 'Белый Сад', sub: 'ул. Садовая, 12, Москва' },
             ].map((item, i) => (
-              <div key={i} className={`reveal reveal-delay-${i + 1} provence-card provence-card-hover p-8 text-center`}>
-                <div className="w-12 h-12 rounded-full mx-auto mb-4 flex items-center justify-center" style={{ background: 'rgba(155,143,174,0.12)' }}>
-                  <Icon name={item.icon} fallback="Star" size={20} style={{ color: C.lavender }} />
-                </div>
-                <p className="text-xs tracking-widest uppercase mb-2" style={{ color: C.lavender }}>{item.label}</p>
-                <p className="text-xl mb-1" style={{ fontFamily: 'Playfair Display, serif', color: C.textDark }}>{item.title}</p>
-                <p className="text-sm" style={{ color: C.textSoft }}>{item.sub}</p>
+              <div key={i} className={`reveal reveal-delay-${i + 1} p-10`}
+                style={{ borderRight: '1px solid #e8e8e8', borderBottom: '1px solid #e8e8e8' }}>
+                <p className="section-label mb-3">{item.label}</p>
+                <p style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1.5rem', fontWeight: 300, color: '#141414' }}>{item.value}</p>
+                <p className="text-xs mt-1" style={{ color: '#999' }}>{item.sub}</p>
               </div>
             ))}
           </div>
@@ -222,366 +197,281 @@ export default function Index() {
       </section>
 
       {/* SCHEDULE */}
-      <section id="schedule" className="py-24 px-6 sage-bg">
-        <div className="max-w-3xl mx-auto">
-          <div className="text-center mb-16">
-            <p className="reveal script-accent text-2xl mb-2">День за днём</p>
-            <h2 className="reveal reveal-delay-1 text-5xl mb-4" style={{ fontFamily: 'Playfair Display, serif', color: C.textDark, fontWeight: 400 }}>
-              Программа дня
-            </h2>
-            <div className="reveal reveal-delay-2 section-divider">
-              <span className="divider-icon">🌸</span>
-            </div>
-          </div>
-
-          <div className="relative">
-            <div className="absolute left-[88px] top-0 bottom-0 w-px" style={{ background: 'rgba(155,143,174,0.3)' }} />
-            <div className="space-y-8">
-              {SCHEDULE.map((item, i) => (
-                <div key={i} className={`reveal reveal-delay-${(i % 3) + 1} flex items-start gap-6`}>
-                  <div className="text-right shrink-0 w-16">
-                    <span className="text-sm font-mono" style={{ color: C.lavender }}>{item.time}</span>
-                  </div>
-                  <div className="relative shrink-0 mt-1">
-                    <div className="timeline-dot" />
-                  </div>
-                  <div className="provence-card px-5 py-4 flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <Icon name={item.icon} fallback="Star" size={14} style={{ color: C.sage }} />
-                      <span style={{ fontFamily: 'Playfair Display, serif', color: C.textDark, fontSize: '1rem' }}>{item.title}</span>
-                    </div>
-                    <p className="text-xs leading-relaxed" style={{ color: C.textSoft }}>{item.desc}</p>
-                  </div>
+      <section id="schedule" className="py-20 px-8 border-b" style={{ background: '#fafafa', borderColor: '#f0f0f0' }}>
+        <div className="max-w-5xl mx-auto">
+          <p className="reveal section-label mb-10">Программа дня</p>
+          <div style={{ borderTop: '1px solid #e8e8e8' }}>
+            {SCHEDULE.map((item, i) => (
+              <div key={i} className={`reveal reveal-delay-${i % 3 + 1} flex items-start gap-8 py-6`}
+                style={{ borderBottom: '1px solid #e8e8e8' }}>
+                <span className="shrink-0 text-xs font-mono mt-0.5" style={{ color: '#999', width: '3rem' }}>{item.time}</span>
+                <div className="shrink-0 mt-2"><div className="timeline-dot" /></div>
+                <div className="flex-1 flex flex-col md:flex-row md:items-center md:justify-between gap-1">
+                  <span style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1.15rem', color: '#141414', fontWeight: 300 }}>{item.title}</span>
+                  <span className="text-xs" style={{ color: '#999' }}>{item.desc}</span>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* VENUE */}
-      <section id="venue" className="py-24 px-6" style={{ background: C.cream }}>
+      <section id="venue" className="py-20 px-8 border-b" style={{ borderColor: '#f0f0f0' }}>
         <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-16">
-            <p className="reveal script-accent text-2xl mb-2">Адрес</p>
-            <h2 className="reveal reveal-delay-1 text-5xl mb-4" style={{ fontFamily: 'Playfair Display, serif', color: C.textDark, fontWeight: 400 }}>
-              Ресторан «Белый Сад»
-            </h2>
-            <div className="reveal reveal-delay-2 section-divider mb-6">
-              <span className="divider-icon">🌿</span>
-            </div>
-            <p className="reveal reveal-delay-2 text-sm" style={{ color: C.textMid }}>ул. Садовая, 12, Москва • Метро Пушкинская, 3 мин пешком</p>
-          </div>
-
-          <div className="reveal rounded-2xl overflow-hidden mb-8" style={{ height: 400, border: '1px solid rgba(155,143,174,0.25)' }}>
-            <iframe
-              src="https://yandex.ru/map-widget/v1/?ll=37.604&z=15&text=Садовая+12+Москва"
-              width="100%" height="100%" style={{ border: 'none' }} title="Карта"
-            />
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              { icon: 'Car', title: 'Парковка', desc: 'Бесплатная парковка для гостей на 80 мест' },
-              { icon: 'Train', title: 'Метро', desc: 'Пушкинская / Тверская / Чеховская, 3 мин' },
-              { icon: 'Phone', title: 'Вопросы', desc: '+7 (999) 123-45-67 • Андрей' },
-            ].map((item, i) => (
-              <div key={i} className={`reveal reveal-delay-${i + 1} provence-card p-6 text-center`}>
-                <Icon name={item.icon} fallback="Star" size={20} style={{ color: C.sage, margin: '0 auto 12px' }} />
-                <p className="mb-2" style={{ fontFamily: 'Playfair Display, serif', color: C.textDark, fontSize: '1.1rem' }}>{item.title}</p>
-                <p className="text-xs" style={{ color: C.textSoft }}>{item.desc}</p>
+          <p className="reveal section-label mb-10">Место</p>
+          <div className="grid md:grid-cols-2 gap-16 mb-12">
+            <div className="reveal">
+              <h2 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '2.5rem', fontWeight: 300, fontStyle: 'italic', color: '#141414', marginBottom: '1rem' }}>
+                Ресторан «Белый Сад»
+              </h2>
+              <p className="text-sm mb-6" style={{ color: '#666', lineHeight: 1.9 }}>
+                ул. Садовая, 12, Москва<br />Метро Пушкинская — 3 мин пешком
+              </p>
+              <div className="space-y-3">
+                {[
+                  { icon: 'Car', text: 'Бесплатная парковка на 80 мест' },
+                  { icon: 'Train', text: 'Пушкинская / Тверская / Чеховская' },
+                  { icon: 'Phone', text: '+7 (999) 123-45-67 • Андрей' },
+                ].map((r, i) => (
+                  <div key={i} className="flex items-center gap-3">
+                    <Icon name={r.icon} fallback="Info" size={13} style={{ color: '#ccc' }} />
+                    <span className="text-xs" style={{ color: '#666' }}>{r.text}</span>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
+            <div className="reveal reveal-delay-2" style={{ height: 320 }}>
+              <iframe src="https://yandex.ru/map-widget/v1/?ll=37.604&z=15&text=Садовая+12+Москва"
+                width="100%" height="100%" style={{ border: '1px solid #e8e8e8' }} title="Карта" />
+            </div>
           </div>
         </div>
       </section>
 
       {/* RSVP */}
-      <section id="rsvp" className="py-24 px-6 lavender-bg">
-        <div className="max-w-xl mx-auto">
-          <div className="text-center mb-12">
-            <p className="reveal script-accent text-2xl mb-2">Ответ гостя</p>
-            <h2 className="reveal reveal-delay-1 text-5xl mb-4" style={{ fontFamily: 'Playfair Display, serif', color: C.textDark, fontWeight: 400 }}>
-              Вы придёте?
-            </h2>
-            <div className="reveal reveal-delay-2 section-divider mb-6">
-              <span className="divider-icon">💌</span>
+      <section id="rsvp" className="py-20 px-8" style={{ background: '#141414' }}>
+        <div className="max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-16 items-start">
+            <div className="reveal">
+              <p className="section-label mb-5" style={{ color: '#555' }}>Подтверждение</p>
+              <h2 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '3rem', fontWeight: 300, fontStyle: 'italic', color: '#fff', lineHeight: 1.1 }}>
+                Вы<br />придёте?
+              </h2>
+              <p className="text-xs mt-6" style={{ color: '#555', lineHeight: 1.9 }}>
+                Просим подтвердить<br />до 1 июля 2026
+              </p>
             </div>
-            <p className="reveal reveal-delay-2 text-sm" style={{ color: C.textMid }}>
-              Просим подтвердить присутствие до 1 июля 2026 года
-            </p>
-          </div>
-
-          {rsvpSent ? (
-            <div className="reveal provence-card p-12 text-center">
-              <div className="text-5xl mb-4">🌸</div>
-              <h3 className="text-2xl mb-3" style={{ fontFamily: 'Playfair Display, serif', color: C.textDark }}>Спасибо!</h3>
-              <p className="text-sm" style={{ color: C.textMid }}>Мы получили ваш ответ и очень рады вас видеть!</p>
-            </div>
-          ) : (
-            <form onSubmit={handleRsvp} className="reveal provence-card p-8 space-y-5">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="col-span-2">
-                  <label className="block text-xs tracking-widest uppercase mb-2" style={{ color: C.textSoft }}>Ваше имя *</label>
-                  <input className="form-input" type="text" required placeholder="Имя и фамилия"
-                    value={rsvp.name} onChange={e => setRsvp({ ...rsvp, name: e.target.value })} />
+            <div className="reveal reveal-delay-2">
+              {rsvpSent ? (
+                <div className="py-12">
+                  <p style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '2rem', fontWeight: 300, fontStyle: 'italic', color: '#fff' }}>
+                    Спасибо — ждём вас!
+                  </p>
+                  <p className="text-xs mt-3" style={{ color: '#555' }}>Мы получили ваш ответ.</p>
                 </div>
-                <div>
-                  <label className="block text-xs tracking-widest uppercase mb-2" style={{ color: C.textSoft }}>Email</label>
-                  <input className="form-input" type="email" placeholder="email@mail.ru"
-                    value={rsvp.email} onChange={e => setRsvp({ ...rsvp, email: e.target.value })} />
-                </div>
-                <div>
-                  <label className="block text-xs tracking-widest uppercase mb-2" style={{ color: C.textSoft }}>Телефон</label>
-                  <input className="form-input" type="tel" placeholder="+7 999 000 00 00"
-                    value={rsvp.phone} onChange={e => setRsvp({ ...rsvp, phone: e.target.value })} />
-                </div>
-                <div>
-                  <label className="block text-xs tracking-widest uppercase mb-2" style={{ color: C.textSoft }}>Гостей</label>
-                  <select className="form-input" value={rsvp.guests} onChange={e => setRsvp({ ...rsvp, guests: e.target.value })}>
-                    {['1', '2', '3', '4', '5+'].map(n => <option key={n} value={n}>{n} {n === '1' ? 'человек' : 'человека'}</option>)}
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-xs tracking-widest uppercase mb-2" style={{ color: C.textSoft }}>Присутствие</label>
-                  <select className="form-input" value={rsvp.coming} onChange={e => setRsvp({ ...rsvp, coming: e.target.value })}>
-                    <option value="yes">С радостью буду!</option>
-                    <option value="no">К сожалению, нет</option>
-                    <option value="maybe">Пока не знаю</option>
-                  </select>
-                </div>
-                <div className="col-span-2">
-                  <label className="block text-xs tracking-widest uppercase mb-3" style={{ color: C.textSoft }}>Алкоголь</label>
-                  <div className="grid grid-cols-2 gap-2">
-                    {[
-                      { val: 'wine', label: '🍷 Вино' },
-                      { val: 'champagne', label: '🥂 Шампанское' },
-                      { val: 'whiskey', label: '🥃 Виски / Коньяк' },
-                      { val: 'beer', label: '🍺 Пиво' },
-                      { val: 'cocktails', label: '🍹 Коктейли' },
-                      { val: 'none', label: '🚫 Не пью' },
-                    ].map(opt => {
-                      const checked = rsvp.alcohol.includes(opt.val);
-                      return (
+              ) : (
+                <form onSubmit={handleRsvp} className="space-y-6">
+                  <div>
+                    <label className="block section-label mb-2" style={{ color: '#555' }}>Имя *</label>
+                    <input className="form-input" type="text" required placeholder="Имя и фамилия"
+                      style={{ background: 'transparent', color: '#fff', borderColor: '#333' }}
+                      value={rsvp.name} onChange={e => setRsvp({ ...rsvp, name: e.target.value })} />
+                  </div>
+                  <div className="grid grid-cols-2 gap-6">
+                    <div>
+                      <label className="block section-label mb-2" style={{ color: '#555' }}>Email</label>
+                      <input className="form-input" type="email" placeholder="mail@mail.ru"
+                        style={{ background: 'transparent', color: '#fff', borderColor: '#333' }}
+                        value={rsvp.email} onChange={e => setRsvp({ ...rsvp, email: e.target.value })} />
+                    </div>
+                    <div>
+                      <label className="block section-label mb-2" style={{ color: '#555' }}>Гостей</label>
+                      <select className="form-input" style={{ background: 'transparent', color: '#fff', borderColor: '#333' }}
+                        value={rsvp.guests} onChange={e => setRsvp({ ...rsvp, guests: e.target.value })}>
+                        {['1','2','3','4','5+'].map(n => <option key={n} value={n} style={{ background: '#141414' }}>{n}</option>)}
+                      </select>
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block section-label mb-3" style={{ color: '#555' }}>Алкоголь</label>
+                    <div className="flex flex-wrap gap-2">
+                      {[
+                        { val: 'wine', label: 'Вино' }, { val: 'champagne', label: 'Шампанское' },
+                        { val: 'whiskey', label: 'Виски' }, { val: 'beer', label: 'Пиво' },
+                        { val: 'cocktails', label: 'Коктейли' }, { val: 'none', label: 'Не пью' },
+                      ].map(opt => (
                         <button key={opt.val} type="button"
-                          onClick={() => setRsvp({ ...rsvp, alcohol: checked ? rsvp.alcohol.filter(a => a !== opt.val) : [...rsvp.alcohol, opt.val] })}
-                          className="text-left text-sm px-4 py-3 rounded-xl transition-all"
-                          style={{
-                            border: checked ? `1.5px solid ${C.lavender}` : '1px solid rgba(155,143,174,0.25)',
-                            background: checked ? 'rgba(155,143,174,0.12)' : 'rgba(255,253,249,0.7)',
-                            color: C.textDark,
-                          }}>
+                          className={`tag-pill px-4 py-2 ${rsvp.alcohol.includes(opt.val) ? 'active' : ''}`}
+                          style={rsvp.alcohol.includes(opt.val) ? {} : { color: '#666', borderColor: '#333' }}
+                          onClick={() => toggleAlcohol(opt.val)}>
                           {opt.label}
                         </button>
-                      );
-                    })}
+                      ))}
+                    </div>
                   </div>
-                </div>
-                <div className="col-span-2">
-                  <label className="block text-xs tracking-widest uppercase mb-2" style={{ color: C.textSoft }}>Аллергии и особые пожелания к меню</label>
-                  <input className="form-input" type="text" placeholder="Например: орехи, лактоза, вегетарианское меню..."
-                    value={rsvp.allergy} onChange={e => setRsvp({ ...rsvp, allergy: e.target.value })} />
-                </div>
-                <div className="col-span-2">
-                  <label className="block text-xs tracking-widest uppercase mb-2" style={{ color: C.textSoft }}>Пожелания молодожёнам</label>
-                  <textarea className="form-input resize-none" rows={3} placeholder="Ваши тёплые слова..."
-                    value={rsvp.wish} onChange={e => setRsvp({ ...rsvp, wish: e.target.value })} />
-                </div>
-              </div>
-              <button type="submit" className="btn-olive" style={{ width: '100%' }}>
-                Подтвердить присутствие
-              </button>
-            </form>
-          )}
+                  <div>
+                    <label className="block section-label mb-2" style={{ color: '#555' }}>Аллергии / пожелания к меню</label>
+                    <input className="form-input" type="text" placeholder="Орехи, лактоза, вегетарианское..."
+                      style={{ background: 'transparent', color: '#fff', borderColor: '#333' }}
+                      value={rsvp.allergy} onChange={e => setRsvp({ ...rsvp, allergy: e.target.value })} />
+                  </div>
+                  <div>
+                    <label className="block section-label mb-2" style={{ color: '#555' }}>Пожелания</label>
+                    <textarea className="form-input" rows={3} placeholder="Ваши тёплые слова..."
+                      style={{ background: 'transparent', color: '#fff', borderColor: '#333' }}
+                      value={rsvp.wish} onChange={e => setRsvp({ ...rsvp, wish: e.target.value })} />
+                  </div>
+                  <div>
+                    <label className="block section-label mb-3" style={{ color: '#555' }}>Присутствие</label>
+                    <div className="flex gap-3">
+                      {[{ val: 'yes', label: 'Буду' }, { val: 'no', label: 'Не смогу' }, { val: 'maybe', label: 'Возможно' }].map(opt => (
+                        <button key={opt.val} type="button"
+                          className={`tag-pill px-5 py-2 ${rsvp.coming === opt.val ? 'active' : ''}`}
+                          style={rsvp.coming === opt.val ? {} : { color: '#666', borderColor: '#333' }}
+                          onClick={() => setRsvp({ ...rsvp, coming: opt.val })}>
+                          {opt.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <button type="submit" className="btn-dark" style={{ background: '#fff', color: '#141414', width: '100%' }}>
+                    Отправить
+                  </button>
+                </form>
+              )}
+            </div>
+          </div>
         </div>
       </section>
 
       {/* GIFTS */}
-      <section id="gifts" className="py-24 px-6" style={{ background: C.cream }}>
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-16">
-            <p className="reveal script-accent text-2xl mb-2">Подарки</p>
-            <h2 className="reveal reveal-delay-1 text-5xl mb-4" style={{ fontFamily: 'Playfair Display, serif', color: C.textDark, fontWeight: 400 }}>
-              Список желаний
-            </h2>
-            <div className="reveal reveal-delay-2 section-divider mb-6">
-              <span className="divider-icon">🎁</span>
-            </div>
-            <p className="reveal reveal-delay-2 text-sm max-w-md mx-auto" style={{ color: C.textMid }}>
-              Лучший подарок — ваше присутствие. Но если хотите порадовать нас чем-то особенным:
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-5 mb-10">
+      <section id="gifts" className="py-20 px-8 border-b" style={{ borderColor: '#f0f0f0' }}>
+        <div className="max-w-5xl mx-auto">
+          <p className="reveal section-label mb-10">Подарки</p>
+          <div className="grid md:grid-cols-2 gap-0 mb-10"
+            style={{ borderTop: '1px solid #e8e8e8', borderLeft: '1px solid #e8e8e8' }}>
             {GIFTS.map((g, i) => (
-              <div key={i} className={`reveal reveal-delay-${i % 2 + 1} gift-card provence-card p-7 flex gap-5 items-start`} style={{ border: '1px solid rgba(155,143,174,0.2)' }}>
-                <div className="text-3xl shrink-0">{g.icon}</div>
+              <div key={i} className={`reveal reveal-delay-${i % 2 + 1} p-8 flex gap-5 items-start`}
+                style={{ borderRight: '1px solid #e8e8e8', borderBottom: '1px solid #e8e8e8' }}>
+                <span className="text-2xl shrink-0">{g.icon}</span>
                 <div>
                   <div className="flex items-center gap-2 mb-1">
-                    <h3 style={{ fontFamily: 'Playfair Display, serif', color: C.textDark, fontSize: '1.1rem' }}>{g.title}</h3>
-                    {g.popular && <span className="text-xs px-2 py-0.5 rounded-full" style={{ background: 'rgba(155,143,174,0.15)', color: C.lavender }}>Популярное</span>}
+                    <span style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1.15rem', color: '#141414' }}>{g.title}</span>
+                    {g.popular && <span className="text-xs px-2 py-0.5" style={{ background: '#f5f5f5', color: '#888' }}>популярное</span>}
                   </div>
-                  <p className="text-xs" style={{ color: C.textSoft }}>{g.desc}</p>
+                  <p className="text-xs" style={{ color: '#999' }}>{g.desc}</p>
                 </div>
               </div>
             ))}
           </div>
-
-          <div className="reveal text-center">
-            <a href="#" className="btn-outline-lavender">Открыть реестр подарков</a>
+          <div className="reveal">
+            <a href="#" className="btn-outline">Открыть реестр подарков</a>
           </div>
         </div>
       </section>
 
       {/* DRESSCODE */}
-      <section id="dresscode" className="py-24 px-6 sage-bg">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-16">
-            <p className="reveal script-accent text-2xl mb-2">Стиль</p>
-            <h2 className="reveal reveal-delay-1 text-5xl mb-4" style={{ fontFamily: 'Playfair Display, serif', color: C.textDark, fontWeight: 400 }}>
-              Дресс-код
-            </h2>
-            <div className="reveal reveal-delay-2 section-divider mb-6">
-              <span className="divider-icon">✿</span>
-            </div>
-            <p className="reveal reveal-delay-2 text-sm max-w-md mx-auto" style={{ color: C.textMid }}>
-              Мы будем рады, если вы поддержите цветовую палитру нашей свадьбы
-            </p>
-          </div>
-
-          <div className="reveal provence-card p-8 mb-10 text-center">
-            <div className="inline-flex items-center gap-3 mb-4">
-              <Icon name="Sparkles" fallback="Star" size={16} style={{ color: C.lavender }} />
-              <span className="text-xs tracking-[0.3em] uppercase" style={{ color: C.lavender }}>Формат вечера</span>
-            </div>
-            <h3 className="text-3xl mb-3" style={{ fontFamily: 'Playfair Display, serif', color: C.textDark }}>Garden Party Chic</h3>
-            <p className="text-sm leading-relaxed max-w-sm mx-auto" style={{ color: C.textMid }}>
-              Лёгкие летние платья и костюмы в пастельных тонах. Романтика, цветы, природа —
-              пусть наряды отражают атмосферу тёплого августовского вечера.
-            </p>
-          </div>
-
-          <div className="reveal mb-10">
-            <p className="text-center text-xs tracking-widest uppercase mb-6" style={{ color: C.textSoft }}>Рекомендуемая палитра</p>
-            <div className="grid grid-cols-3 md:grid-cols-6 gap-4">
-              {DRESSCODE.map((dc, i) => (
-                <div key={i} className={`reveal reveal-delay-${i % 3 + 1} text-center`}>
-                  <div className="w-16 h-16 rounded-full mx-auto mb-3"
-                    style={{ background: dc.hex, border: dc.light ? '2px solid rgba(155,143,174,0.4)' : 'none', boxShadow: '0 4px 16px rgba(0,0,0,0.1)' }} />
-                  <p className="text-xs" style={{ color: C.textMid }}>{dc.name}</p>
+      <section id="dresscode" className="py-20 px-8 border-b" style={{ background: '#fafafa', borderColor: '#f0f0f0' }}>
+        <div className="max-w-5xl mx-auto">
+          <p className="reveal section-label mb-10">Дресс-код</p>
+          <div className="grid md:grid-cols-2 gap-16">
+            <div className="reveal">
+              <h2 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '2.5rem', fontWeight: 300, fontStyle: 'italic', color: '#141414', marginBottom: '1rem' }}>
+                Garden Party
+              </h2>
+              <p className="text-sm mb-8" style={{ color: '#666', lineHeight: 1.9 }}>
+                Лёгкие летние наряды в пастельных тонах.<br />Романтика тёплого августовского вечера.
+              </p>
+              <div className="grid grid-cols-2 gap-8">
+                <div>
+                  <p className="section-label mb-4">Для гостий</p>
+                  <ul className="space-y-2">
+                    {['Платья миди / в пол', 'Пастельные тона', 'Брючный костюм', 'Сандалии / каблук'].map((t, i) => (
+                      <li key={i} className="text-xs flex items-start gap-2" style={{ color: '#666' }}>
+                        <span style={{ color: '#ccc' }}>—</span>{t}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-5">
-            <div className="reveal reveal-delay-1 provence-card p-7">
-              <div className="flex items-center gap-3 mb-4">
-                <span className="text-2xl">👗</span>
-                <h3 style={{ fontFamily: 'Playfair Display, serif', color: C.textDark, fontSize: '1.2rem' }}>Для гостий</h3>
+                <div>
+                  <p className="section-label mb-4">Для гостей</p>
+                  <ul className="space-y-2">
+                    {['Светлый костюм', 'Льняной пиджак', 'Без галстука OK', 'Лоферы / туфли'].map((t, i) => (
+                      <li key={i} className="text-xs flex items-start gap-2" style={{ color: '#666' }}>
+                        <span style={{ color: '#ccc' }}>—</span>{t}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
-              <ul className="space-y-2">
-                {['Летние платья миди или в пол', 'Пастельные и цветочные принты', 'Элегантные брючные костюмы', 'Каблук или элегантные сандалии'].map((t, i) => (
-                  <li key={i} className="flex items-center gap-2 text-sm" style={{ color: C.textMid }}>
-                    <span style={{ color: C.lavender, fontSize: '0.5rem' }}>◆</span>{t}
-                  </li>
-                ))}
-              </ul>
+              <p className="text-xs mt-8 pt-6" style={{ color: '#ccc', borderTop: '1px solid #e8e8e8' }}>
+                Избегайте: белого и айвори, чёрного total look, неоновых оттенков
+              </p>
             </div>
-            <div className="reveal reveal-delay-2 provence-card p-7">
-              <div className="flex items-center gap-3 mb-4">
-                <span className="text-2xl">🤵</span>
-                <h3 style={{ fontFamily: 'Playfair Display, serif', color: C.textDark, fontSize: '1.2rem' }}>Для гостей</h3>
+            <div className="reveal reveal-delay-2">
+              <p className="section-label mb-6">Палитра</p>
+              <div className="grid grid-cols-3 gap-5">
+                {DRESSCODE_COLORS.map((dc, i) => (
+                  <div key={i} className="text-center">
+                    <div className="w-14 h-14 mx-auto mb-2" style={{ background: dc.hex, border: dc.border ? '1px solid #e0e0e0' : 'none' }} />
+                    <p className="text-xs" style={{ color: '#999' }}>{dc.name}</p>
+                  </div>
+                ))}
               </div>
-              <ul className="space-y-2">
-                {['Костюм в светлых тонах', 'Льняной или хлопковый пиджак', 'Рубашка без галстука уместна', 'Лоферы или классические туфли'].map((t, i) => (
-                  <li key={i} className="flex items-center gap-2 text-sm" style={{ color: C.textMid }}>
-                    <span style={{ color: C.sage, fontSize: '0.5rem' }}>◆</span>{t}
-                  </li>
-                ))}
-              </ul>
             </div>
-          </div>
-
-          <div className="reveal mt-6 provence-card px-7 py-5 flex flex-col md:flex-row items-center gap-4"
-            style={{ background: 'rgba(255,240,240,0.5)', border: '1px solid rgba(200,100,100,0.15)' }}>
-            <Icon name="AlertCircle" fallback="Info" size={18} style={{ color: '#c07070', flexShrink: 0 }} />
-            <p className="text-sm" style={{ color: '#7a4040' }}>
-              <strong>Просьба избегать:</strong> белого и айвори (цвет невесты), чёрного total look и ярких неоновых оттенков.
-            </p>
           </div>
         </div>
       </section>
 
       {/* PLAYLIST */}
-      <section id="playlist" className="py-24 px-6" style={{ background: C.cream }}>
-        <div className="max-w-3xl mx-auto">
-          <div className="text-center mb-16">
-            <p className="reveal script-accent text-2xl mb-2">Атмосфера</p>
-            <h2 className="reveal reveal-delay-1 text-5xl mb-4" style={{ fontFamily: 'Playfair Display, serif', color: C.textDark, fontWeight: 400 }}>
-              Свадебный плейлист
-            </h2>
-            <div className="reveal reveal-delay-2 section-divider mb-6">
-              <span className="divider-icon">🎵</span>
-            </div>
-            <p className="reveal reveal-delay-2 text-sm" style={{ color: C.textMid }}>Предложите свою любимую песню для нашего вечера</p>
-          </div>
-
-          <div className="space-y-3 mb-10">
-            {PLAYLIST.map((track, i) => (
-              <div key={i} className={`reveal reveal-delay-${i % 3 + 1} provence-card px-6 py-4 flex items-center justify-between`}
-                style={{ border: '1px solid rgba(155,143,174,0.2)' }}>
-                <div className="flex items-center gap-4">
-                  <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{ background: 'rgba(155,143,174,0.12)' }}>
-                    <Icon name="Music" size={14} style={{ color: C.lavender }} />
-                  </div>
+      <section id="playlist" className="py-20 px-8 border-b" style={{ borderColor: '#f0f0f0' }}>
+        <div className="max-w-5xl mx-auto">
+          <p className="reveal section-label mb-10">Плейлист</p>
+          <div className="grid md:grid-cols-2 gap-16">
+            <div className="reveal" style={{ borderTop: '1px solid #e8e8e8' }}>
+              {PLAYLIST.map((track, i) => (
+                <div key={i} className="flex items-center justify-between py-4" style={{ borderBottom: '1px solid #e8e8e8' }}>
                   <div>
-                    <p className="text-sm font-medium" style={{ color: C.textDark }}>{track.song}</p>
-                    <p className="text-xs" style={{ color: C.textSoft }}>{track.artist}</p>
+                    <p className="text-sm" style={{ color: '#141414' }}>{track.song}</p>
+                    <p className="text-xs" style={{ color: '#999' }}>{track.artist}</p>
                   </div>
+                  <span className="text-xs" style={{ color: '#ccc' }}>{track.mood}</span>
                 </div>
-                <span className="text-xs px-3 py-1 rounded-full" style={{ background: 'rgba(143,168,130,0.15)', color: C.olive }}>{track.mood}</span>
+              ))}
+            </div>
+            <div className="reveal reveal-delay-2">
+              <p className="text-sm mb-6" style={{ color: '#666' }}>Предложите свою любимую песню для нашего вечера</p>
+              <div className="space-y-4">
+                <input className="form-input" type="text" placeholder="Артист — Название"
+                  value={song} onChange={e => setSong(e.target.value)} />
+                <button className="btn-dark" style={{ width: '100%' }}>Добавить в плейлист</button>
               </div>
-            ))}
-          </div>
-
-          <div className="reveal provence-card p-7" style={{ border: '1px solid rgba(155,143,174,0.2)' }}>
-            <p className="mb-4" style={{ fontFamily: 'Playfair Display, serif', color: C.textDark, fontSize: '1.1rem' }}>Предложить песню</p>
-            <div className="flex gap-3">
-              <input className="form-input flex-1" type="text" placeholder="Артист — Название песни"
-                value={playlistSong} onChange={e => setPlaylistSong(e.target.value)} />
-              <button className="btn-olive shrink-0" style={{ padding: '12px 24px' }}>Добавить</button>
             </div>
           </div>
         </div>
       </section>
 
       {/* CONTACTS */}
-      <section id="contacts" className="py-24 px-6 lavender-bg">
-        <div className="max-w-3xl mx-auto text-center">
-          <p className="reveal script-accent text-2xl mb-2">Связь</p>
-          <h2 className="reveal reveal-delay-1 text-5xl mb-4" style={{ fontFamily: 'Playfair Display, serif', color: C.textDark, fontWeight: 400 }}>
-            Контакты
-          </h2>
-          <div className="reveal reveal-delay-2 section-divider mb-10">
-            <span className="divider-icon">💐</span>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-6">
+      <section id="contacts" className="py-20 px-8 border-b" style={{ background: '#fafafa', borderColor: '#f0f0f0' }}>
+        <div className="max-w-5xl mx-auto">
+          <p className="reveal section-label mb-10">Контакты</p>
+          <div className="grid md:grid-cols-2 gap-0"
+            style={{ borderTop: '1px solid #e8e8e8', borderLeft: '1px solid #e8e8e8' }}>
             {[
-              { name: 'Дарья', role: 'Невеста', phone: '+7 (999) 111-22-33', tg: '@darya_wedding', icon: '👰' },
-              { name: 'Андрей', role: 'Жених', phone: '+7 (999) 123-45-67', tg: '@andrey_wedding', icon: '🤵' },
+              { name: 'Дарья', role: 'Невеста', phone: '+7 (999) 111-22-33', tg: '@darya_wedding' },
+              { name: 'Андрей', role: 'Жених', phone: '+7 (999) 123-45-67', tg: '@andrey_wedding' },
             ].map((p, i) => (
-              <div key={i} className={`reveal reveal-delay-${i + 1} provence-card p-8`}>
-                <div className="text-4xl mb-4">{p.icon}</div>
-                <h3 className="text-2xl mb-1" style={{ fontFamily: 'Playfair Display, serif', color: C.textDark }}>{p.name}</h3>
-                <p className="text-xs tracking-widest uppercase mb-4" style={{ color: C.lavender }}>{p.role}</p>
+              <div key={i} className={`reveal reveal-delay-${i + 1} p-10`}
+                style={{ borderRight: '1px solid #e8e8e8', borderBottom: '1px solid #e8e8e8' }}>
+                <p className="section-label mb-3">{p.role}</p>
+                <p style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '2rem', fontWeight: 300, fontStyle: 'italic', color: '#141414', marginBottom: '1rem' }}>{p.name}</p>
                 <div className="space-y-2">
-                  <p className="flex items-center justify-center gap-2 text-sm" style={{ color: C.textMid }}>
-                    <Icon name="Phone" size={14} style={{ color: C.sage }} />{p.phone}
+                  <p className="text-xs flex items-center gap-2" style={{ color: '#666' }}>
+                    <Icon name="Phone" size={12} style={{ color: '#ccc' }} />{p.phone}
                   </p>
-                  <p className="flex items-center justify-center gap-2 text-sm" style={{ color: C.textMid }}>
-                    <Icon name="MessageCircle" size={14} style={{ color: C.sage }} />{p.tg}
+                  <p className="text-xs flex items-center gap-2" style={{ color: '#666' }}>
+                    <Icon name="MessageCircle" size={12} style={{ color: '#ccc' }} />{p.tg}
                   </p>
                 </div>
               </div>
@@ -591,12 +481,11 @@ export default function Index() {
       </section>
 
       {/* FOOTER */}
-      <footer className="py-14 px-6 text-center" style={{ background: C.olive, borderTop: '1px solid rgba(255,255,255,0.1)' }}>
-        <div className="script-accent text-4xl mb-2" style={{ color: 'rgba(248,245,239,0.9)' }}>
+      <footer className="py-12 px-8 flex flex-col md:flex-row items-center justify-between gap-4" style={{ borderTop: '1px solid #e8e8e8' }}>
+        <p style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1.4rem', fontWeight: 300, fontStyle: 'italic', color: '#141414' }}>
           Дарья &amp; Андрей
-        </div>
-        <p className="text-xs tracking-widest mb-4" style={{ color: 'rgba(248,245,239,0.45)' }}>11 августа 2026 • Москва</p>
-        <p className="text-xs" style={{ color: 'rgba(248,245,239,0.3)' }}>Сделано с любовью ♥</p>
+        </p>
+        <p className="section-label">11 августа 2026 · Москва</p>
       </footer>
 
     </div>
